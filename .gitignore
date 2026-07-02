@@ -1,0 +1,14 @@
+# Build artifacts
+cascade_filter
+obj/
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db

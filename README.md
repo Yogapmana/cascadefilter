@@ -17,7 +17,6 @@ Proyek ini mendemonstrasikan bagaimana pemangkasan komputasi melalui optimasi ur
 6. [Panduan Penggunaan](#panduan-penggunaan)
    - [CLI Benchmark (cascade_filter)](#cli-benchmark-cascade_filter)
    - [Web DSP Dashboard (app.py)](#web-dsp-dashboard-apppy)
-   - [Skrip Visualisasi Gelombang Audio (visualize_audio.py)](#skrip-visualisasi-gelombang-audio-visualize_audiopy)
 7. [Detail Implementasi Teknis](#detail-implementasi-teknis)
    - [1. Representasi Matriks (1D-Contiguous Array)](#1-representasi-matriks-1d-contiguous-array)
    - [2. Optimasi Algoritma (Dynamic Programming MCM)](#2-optimasi-algoritma-dynamic-programming-mcm)
@@ -71,9 +70,6 @@ cascadefilter/
 ├── README.md                # Dokumentasi proyek utama ini
 ├── app.py                   # Server backend Flask untuk Web DSP Dashboard
 ├── requirements.txt         # Daftar pustaka Python yang dibutuhkan
-├── Implementation_Plan.md   # Perencanaan awal implementasi tim
-├── Laporan_Akhir.md         # Laporan analisis performa komprehensif
-├── Penjelasan.md            # Panduan penjelasan teknis program untuk pengguna
 ├── include/                 # Header file C
 │   ├── dp_order.h           # Header struktur hasil DP & fungsi eksekusi urutan optimal
 │   ├── matrix.h             # Header representasi struct Matrix & Vector 1D kontigu
@@ -92,8 +88,7 @@ cascadefilter/
 ├── scripts/                 # Skrip pembantu & otomatisasi
 │   ├── benchmark.sh         # Bash script untuk menguji 3 skenario performa CPU
 │   ├── generate_input.py    # Skrip python pembuat file biner input acak
-│   ├── plot_results.py      # Skrip python pembuat grafik mock benchmark
-│   └── visualize_audio.py   # Skrip visualisasi gelombang audio sebelum & sesudah filter
+│   └── plot_results.py      # Skrip python pembuat grafik mock benchmark
 ├── static/                  # Aset statis untuk Web Dashboard
 │   ├── style.css            # Gaya desain CSS dashboard (dark theme)
 │   └── script.js            # Logika interaksi frontend web dashboard

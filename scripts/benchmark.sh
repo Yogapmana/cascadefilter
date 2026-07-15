@@ -25,5 +25,5 @@ echo "--- Large Scenario (Parallel Scalability) ---"
 for threads in 1 2 4 8; do
     echo ">> Running with OMP_NUM_THREADS=$threads"
     export OMP_NUM_THREADS=$threads
-    ./cascade_filter 10 1024 2048 2048 512 512 256 256 128 128 64 64
+    ./cascade_filter 10 2048 4096 4096 1024 1024 512 512 256 256 128 128
 done

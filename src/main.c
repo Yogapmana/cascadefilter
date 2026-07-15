@@ -43,11 +43,16 @@ int main(int argc, char *argv[]) {
         dims[0] = 10; dims[1] = 150; dims[2] = 20; dims[3] = 80; dims[4] = 10;
     }
 
-    printf("CascadeFilter Benchmark\n");
-    printf("Number of matrices: %d\n", n);
-    printf("Dimensions: ");
-    for (int i = 0; i <= n; i++) printf("%d ", dims[i]);
-    printf("\n\n");
+    printf("==================================================\n");
+    printf("               BENCHMARK CASCADEFILTER            \n");
+    printf("==================================================\n");
+    printf("Jumlah Matriks Filter        : %d\n", n);
+    printf("Dimensi Rantai Matriks       : ");
+    for (int i = 0; i <= n; i++) {
+        printf("%d", dims[i]);
+        if (i < n) printf(" x ");
+    }
+    printf("\n");
 
     // 1. Generate Input
     Matrix **matrices = generate_filter_bank(dims, n);
@@ -67,7 +72,7 @@ int main(int argc, char *argv[]) {
     double ops_dp = dp_res.m[1][n];
     double dp_reduction = (ops_naive - ops_dp) / ops_naive * 100.0;
     
-    printf("DP Operations Reduction: %.2f%%\n\n", dp_reduction);
+    printf("Pengurangan Operasi Perkalian: %.2f%% (Memangkas beban matematika oleh DP)\n\n", dp_reduction);
 
     // 3. Baseline: Naive Sequential (left-to-right)
     double start = get_time();
@@ -107,14 +112,14 @@ int main(int argc, char *argv[]) {
         printf("ERROR: Parallel Task DP output does not match Baseline!\n");
         return 1;
     }
-    printf("Verification SUCCESS: All versions output match within epsilon %g.\n\n", epsilon);
+    printf("Hasil Verifikasi Keakuratan  : SUKSES (Semua metode menghasilkan matriks yang identik, epsilon = %g)\n\n", epsilon);
 
     // 8. Output Benchmark Times
-    printf("Execution Times:\n");
-    printf("- Baseline (Naive seq) : %f s\n", t_baseline);
-    printf("- Sequential + DP      : %f s\n", t_seq_dp);
-    printf("- Parallel Data + DP   : %f s\n", t_par_dp);
-    printf("- Parallel Task + DP   : %f s\n\n", t_task_dp);
+    printf("Waktu Eksekusi Perkalian Matriks (Pre-komputasi):\n");
+    printf("  1. Naif Sekuensial (Tanpa Optimasi)     : %f detik\n", t_baseline);
+    printf("  2. Sekuensial + DP (Optimasi Algoritma)  : %f detik\n", t_seq_dp);
+    printf("  3. Paralel Data + DP (Optimasi Hardware) : %f detik\n", t_par_dp);
+    printf("  4. Paralel Tugas + DP (Multi-threading)  : %f detik\n\n", t_task_dp);
 
     // Speedup Metrics
     double speedup_dp_only = t_baseline / t_seq_dp;
@@ -124,14 +129,14 @@ int main(int argc, char *argv[]) {
     int num_threads = omp_get_max_threads();
     double efficiency = speedup_par_only / num_threads;
 
-    printf("Metrik Speedup:\n");
-    printf("- DP-only Speedup      : %.2f x\n", speedup_dp_only);
-    printf("- Parallel-only Speedup: %.2f x\n", speedup_par_only);
-    printf("- Total Speedup        : %.2f x\n", speedup_total);
-    printf("- Parallel Efficiency  : %.2f (threads=%d)\n\n", efficiency, num_threads);
+    printf("Metrik Peningkatan Kecepatan (Speedup):\n");
+    printf("  - Kontribusi Optimasi DP Saja (Algoritma)       : %.2f x lebih cepat\n", speedup_dp_only);
+    printf("  - Kontribusi Paralelisasi Saja (Hardware)       : %.2f x lebih cepat\n", speedup_par_only);
+    printf("  - Total Peningkatan Kecepatan (Naif vs Paralel) : %.2f x lebih cepat\n", speedup_total);
+    printf("  - Efisiensi Paralel (pada %d Threads)           : %.2f%% (tingkat utilisasi core)\n\n", num_threads, efficiency * 100.0);
 
     // 9. Apply Filter to Signal
-    printf("Applying Filter...\n");
+    printf("Simulasi Penerapan Filter pada Sinyal Suara:\n");
     start = get_time();
     Vector *Y1 = vector_create(dims[0]);
     // Apply one-by-one: X is dims[n]
@@ -159,8 +164,8 @@ int main(int argc, char *argv[]) {
     end = get_time();
     double t_apply_combined = end - start;
 
-    printf("Runtime - Apply one-by-one: %f s\n", t_apply_sequential);
-    printf("Runtime - Apply combined  : %f s\n", t_apply_combined);
+    printf("  - Metode Pemrosesan Satu-per-satu (Tanpa Penggabungan) : %f detik\n", t_apply_sequential);
+    printf("  - Metode Matriks Gabungan (Hasil Pre-komputasi)        : %f detik\n", t_apply_combined);
     
     // Check if applied signals match
     int signal_match = 1;
@@ -170,9 +175,9 @@ int main(int argc, char *argv[]) {
         if (diff > epsilon && diff / (max_val + 1e-9) > epsilon) signal_match = 0;
     }
     if (signal_match) {
-        printf("Apply filter match verified.\n");
+        printf("  Hasil Sinyal Akhir: SUKSES (Kedua metode menghasilkan suara yang identik)\n");
     } else {
-        printf("Apply filter match FAILED.\n");
+        printf("  Hasil Sinyal Akhir: GAGAL (Ada perbedaan nilai sinyal antara kedua metode)\n");
     }
 
     // Cleanup

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CascadeFilter DSP Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>CascadeFilter DSP Dashboard</h1>
+        <p>Aplikasi Pemrosesan Sinyal Audio Real-Time</p>
+    </header>
+
+    <main class="container">
+        <section class="card">
+            <h2>1. Sumber Audio Input</h2>
+            <div class="input-group">
+                <button id="btn-generate" class="btn primary">Bikin Sinyal Simulasi</button>
+                <span> ATAU </span>
+                <input type="file" id="file-upload" accept=".wav" class="file-input">
+            </div>
+            
+            <div id="input-audio-container" class="hidden">
+                <h3>Audio Mentah:</h3>
+                <audio id="audio-input" controls></audio>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>2. Engine Pemrosesan (Filter)</h2>
+            <p>Pilih metode komputasi matriks filter (Opsi DP dan Paralel tidak merubah suara, hanya mempengaruhi kecepatan eksekusi di server):</p>
+            <div class="methods-group">
+                <button class="btn secondary" onclick="processAudio('baseline')">🐢 Proses Baseline (Naif)</button>
+                <button class="btn secondary" onclick="processAudio('seq_dp')">🐇 Proses Sekuensial + DP</button>
+                <button class="btn secondary" onclick="processAudio('par_dp')">🚀 Proses Paralel + DP</button>
+            </div>
+            <div id="loader" class="hidden">Menjalankan Engine C di Backend...</div>
+        </section>
+
+        <section class="card" id="results-section">
+            <h2>3. Hasil Pemrosesan</h2>
+            <div id="output-audio-container" class="hidden">
+                <h3>Audio Hasil Filter:</h3>
+                <audio id="audio-output" controls></audio>
+            </div>
+            
+            <div class="stats-board">
+                <h3>Statistik Kecepatan Engine C</h3>
+                <ul id="stats-list">
+                    <!-- Stats appended here -->
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

@@ -195,19 +195,6 @@ Dashboard ini menyajikan antarmuka visual berbasis web untuk menyimulasikan pemr
 
 ---
 
-### Skrip Visualisasi Gelombang Audio (`visualize_audio.py`)
-
-Skrip ini menyimulasikan penyaringan audio dan menyimpannya ke dalam bentuk plot grafik gambar.
-
-1. **Jalankan skrip visualisasi:**
-   ```bash
-   python3 scripts/visualize_audio.py
-   ```
-2. **Lihat Hasil:**
-   Skrip akan menghasilkan plot komparasi gelombang audio sebelum dan sesudah disaring, serta menyimpannya dalam berkas `scripts/audio_cascade_plot.png`. Plot ini menggunakan tema gelap (*dark mode*) untuk estetika visual yang premium.
-
----
-
 ## Detail Implementasi Teknis
 
 ### 1. Representasi Matriks (1D-Contiguous Array)
